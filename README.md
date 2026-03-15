@@ -42,6 +42,17 @@ docker compose up -d --force-recreate
 docker compose up -d --pull always --force-recreate
 ```
 
+### ボリュームのバックアップ/リストア
+
+```bash
+docker volume export <volume-name> --output vol.tar
+
+# docker volume create <volume-name>
+docker volume import <volume-name> --output vol.tar
+
+docker volume export <old-volume-name> | docker volume import <new-volume-name> -
+```
+
 ## docs
 
 - <https://codeberg.org/DNS-OARC/dsc/src/branch/main>
