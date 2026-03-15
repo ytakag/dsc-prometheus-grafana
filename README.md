@@ -2,6 +2,12 @@
 
 ## Setup
 
+### init
+
+```bash
+cp ./docker/.env.example ./docker/.env
+```
+
 ### podman
 
 ```bash
