@@ -28,15 +28,6 @@ scrape_configs:
     file_sd_configs:
       - files:
           - /etc/prometheus/sd-node-exporter.yml
-    relabel_configs:
-      - source_labels: [__address__]
-        regex: '([^:]+):(\d+):(.*)'
-        target_label: instance
-        replacement: "${3}"
-      - source_labels: [__address__]
-        regex: '([^:]+):(\d+):(.*)'
-        target_label: __address__
-        replacement: "${1}:${2}"
     metric_relabel_configs:
       - source_labels: [__name__, qtype]
         regex: "^dsc_.*;.+$"

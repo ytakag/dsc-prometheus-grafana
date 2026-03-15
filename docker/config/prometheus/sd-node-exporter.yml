@@ -1,4 +1,14 @@
 - targets:
-  - 10.0.0.53:9100:nscache1.example.invalid
-  - 10.0.0.54:9100:ns1.example.invalid
-  - 192.168.20.53:9100:ns2.example.invalid
+    - 10.0.0.53:9100
+  labels:
+    hostname: nscache1.example.invalid
+
+- targets:
+    - 10.0.0.54:9100
+  labels:
+    hostname: ns1.example.invalid
+
+- targets:
+    - 192.168.20.53:9100
+  labels:
+    hostname: ns2.example.invalid
