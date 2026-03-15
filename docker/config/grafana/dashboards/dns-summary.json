@@ -3,7 +3,7 @@
   "kind": "Dashboard",
   "metadata": {
     "name": "ytzzp9r",
-    "generation": 150,
+    "generation": 161,
     "creationTimestamp": "2026-01-27T07:57:26Z",
     "labels": {},
     "annotations": {}
@@ -129,6 +129,7 @@
                       "mode": "off"
                     }
                   },
+                  "decimals": 0,
                   "thresholds": {
                     "mode": "absolute",
                     "steps": [
@@ -196,74 +197,13 @@
               "queryOptions": {
                 "interval": "1m"
               },
-              "transformations": [
-                {
-                  "kind": "renameByRegex",
-                  "spec": {
-                    "id": "renameByRegex",
-                    "options": {
-                      "regex": "^10-100$",
-                      "renamePattern": "0.001ms-0.01ms"
-                    }
-                  }
-                },
-                {
-                  "kind": "renameByRegex",
-                  "spec": {
-                    "id": "renameByRegex",
-                    "options": {
-                      "regex": "^100-1000$",
-                      "renamePattern": "0.01ms-1ms"
-                    }
-                  }
-                },
-                {
-                  "kind": "renameByRegex",
-                  "spec": {
-                    "id": "renameByRegex",
-                    "options": {
-                      "regex": "^1000-10000$",
-                      "renamePattern": "1ms-10ms"
-                    }
-                  }
-                },
-                {
-                  "kind": "renameByRegex",
-                  "spec": {
-                    "id": "renameByRegex",
-                    "options": {
-                      "regex": "^10000-100000$",
-                      "renamePattern": "10ms-100ms"
-                    }
-                  }
-                },
-                {
-                  "kind": "renameByRegex",
-                  "spec": {
-                    "id": "renameByRegex",
-                    "options": {
-                      "regex": "^100000-1000000$",
-                      "renamePattern": "100ms-1000ms"
-                    }
-                  }
-                },
-                {
-                  "kind": "renameByRegex",
-                  "spec": {
-                    "id": "renameByRegex",
-                    "options": {
-                      "regex": "^1000000-10000000$",
-                      "renamePattern": "1000ms-10000ms"
-                    }
-                  }
-                }
-              ]
+              "transformations": []
             }
           },
           "description": "",
           "id": 10,
           "links": [],
-          "title": "Response Time",
+          "title": "Response Time (μs)",
           "vizConfig": {
             "group": "timeseries",
             "kind": "VizConfig",
@@ -310,6 +250,7 @@
                       "mode": "off"
                     }
                   },
+                  "decimals": 0,
                   "fieldMinMax": true,
                   "thresholds": {
                     "mode": "absolute",
@@ -336,8 +277,8 @@
                   "displayMode": "table",
                   "placement": "right",
                   "showLegend": true,
-                  "sortBy": "Last *",
-                  "sortDesc": true
+                  "sortBy": "Name",
+                  "sortDesc": false
                 },
                 "tooltip": {
                   "hideZeros": false,
@@ -367,7 +308,7 @@
                       "spec": {
                         "editorMode": "code",
                         "exemplar": false,
-                        "expr": "topk(\n  100,\n  sum by (thirdld) (\n    sum_over_time(\n      dsc_third_ld_vs_rcode{thirdld!=\"\",thirdld!~\".*:.*\", instance=~\"$instance\"}[$__range]\n    )\n  )\n)",
+                        "expr": "topk(\n  100,\n  sum by (thirdld) (\n    sum_over_time(\n      max_over_time(\n        dsc_third_ld_vs_rcode{thirdld!=\"\",thirdld!~\".*:.*\", instance=~\"$instance\"}[$dsc_statistics_interval]\n      )[$__range:$dsc_statistics_interval]\n    )\n  )\n)",
                         "format": "table",
                         "instant": true,
                         "legendFormat": "__auto",
@@ -433,6 +374,7 @@
                       "placement": "auto"
                     }
                   },
+                  "decimals": 0,
                   "thresholds": {
                     "mode": "absolute",
                     "steps": [
@@ -574,6 +516,7 @@
                       "mode": "off"
                     }
                   },
+                  "decimals": 0,
                   "thresholds": {
                     "mode": "absolute",
                     "steps": [
@@ -693,6 +636,7 @@
                       "mode": "off"
                     }
                   },
+                  "decimals": 0,
                   "thresholds": {
                     "mode": "absolute",
                     "steps": [
@@ -858,7 +802,7 @@
                       "spec": {
                         "editorMode": "code",
                         "exemplar": false,
-                        "expr": "topk(\n  100,\n  sum by (clientsubnet) (\n    sum_over_time(\n      dsc_client_subnet{instance=~\"$instance\"}[$__range]\n    )\n  )\n)",
+                        "expr": "topk(\n  100,\n  sum by (clientsubnet) (\n    sum_over_time(\n      max_over_time(\n        dsc_client_subnet{instance=~\"$instance\"}[$dsc_statistics_interval]\n      )[$__range:$dsc_statistics_interval]\n    )\n  )\n)",
                         "format": "table",
                         "instant": true,
                         "legendFormat": "__auto",
@@ -926,6 +870,7 @@
                       "placement": "auto"
                     }
                   },
+                  "decimals": 0,
                   "thresholds": {
                     "mode": "absolute",
                     "steps": [
@@ -1097,7 +1042,7 @@
                       "spec": {
                         "editorMode": "code",
                         "exemplar": false,
-                        "expr": "sum(\n  avg_over_time(dsc_qtype{instance=~\"$instance\"}[3m])\n) / 60",
+                        "expr": "sum(\n  max_over_time(dsc_qtype{instance=~\"$instance\"}[$dsc_statistics_interval])\n) / 60",
                         "format": "time_series",
                         "interval": "",
                         "legendFormat": "__auto",
@@ -1129,6 +1074,7 @@
                     "fixedColor": "blue",
                     "mode": "fixed"
                   },
+                  "decimals": 0,
                   "fieldMinMax": false,
                   "thresholds": {
                     "mode": "absolute",
@@ -1365,6 +1311,7 @@
                       "mode": "off"
                     }
                   },
+                  "decimals": 0,
                   "thresholds": {
                     "mode": "absolute",
                     "steps": [
@@ -1418,7 +1365,7 @@
                       "spec": {
                         "editorMode": "code",
                         "exemplar": false,
-                        "expr": "sum by (tld, qtype_name) (\n  sum_over_time(\n    dsc_qtype_vs_tld{instance=~\"$instance\"}[$__range]\n  )\n)",
+                        "expr": "sum by (tld, qtype_name) (\n  sum_over_time(\n    max_over_time(\n      dsc_qtype_vs_tld{instance=~\"$instance\"}[$dsc_statistics_interval]\n    )[$__range:$dsc_statistics_interval]\n  )\n)",
                         "format": "table",
                         "instant": false,
                         "legendFormat": "__auto",
@@ -1541,6 +1488,7 @@
                       "mode": "off"
                     }
                   },
+                  "decimals": 0,
                   "thresholds": {
                     "mode": "absolute",
                     "steps": [
@@ -1607,7 +1555,7 @@
                       "spec": {
                         "editorMode": "code",
                         "exemplar": false,
-                        "expr": "sum by (secondld, rcode_name) (\n  sum_over_time(\n    dsc_second_ld_vs_rcode{secondld!~\".*:.*\",instance=~\"$instance\"}[$__range]\n  )\n)",
+                        "expr": "sum by (secondld, rcode_name) (\n  sum_over_time(\n    max_over_time(\n      dsc_second_ld_vs_rcode{secondld!~\".*:.*\",instance=~\"$instance\"}[$dsc_statistics_interval]\n    )[$__range:$dsc_statistics_interval]\n  )\n)",
                         "format": "table",
                         "instant": false,
                         "legendFormat": "__auto",
@@ -1730,6 +1678,7 @@
                       "mode": "off"
                     }
                   },
+                  "decimals": 0,
                   "fieldMinMax": false,
                   "thresholds": {
                     "mode": "absolute",
@@ -1798,7 +1747,7 @@
                       "spec": {
                         "editorMode": "code",
                         "exemplar": false,
-                        "expr": "sum by (clientaddr, rcode_name) (\n  sum_over_time(\n    dsc_client_addr_vs_rcode{clientaddr!~\"10.0.0.53|10.0.0.54|192.168.20.53\", instance=~\"$instance\"}[$__range]\n  )\n)",
+                        "expr": "sum by (clientaddr, rcode_name) (\n  sum_over_time(\n    max_over_time(\n      dsc_client_addr_vs_rcode{clientaddr!~\"10.0.0.53|10.0.0.54|192.168.20.53\", instance=~\"$instance\"}[$dsc_statistics_interval]\n    )[$__range:$dsc_statistics_interval]\n  )\n)",
                         "format": "table",
                         "instant": false,
                         "legendFormat": "__auto",
@@ -1921,6 +1870,7 @@
                       "mode": "off"
                     }
                   },
+                  "decimals": 0,
                   "fieldMinMax": false,
                   "thresholds": {
                     "mode": "absolute",
@@ -1989,7 +1939,7 @@
                       "spec": {
                         "editorMode": "code",
                         "exemplar": false,
-                        "expr": "sum by (thirdld, rcode_name) (\n  sum_over_time(\n    dsc_third_ld_vs_rcode{thirdld!~\".*:.*\",instance=~\"$instance\"}[$__range]\n  )\n)",
+                        "expr": "sum by (thirdld, rcode_name) (\n  sum_over_time(\n    max_over_time(\n      dsc_third_ld_vs_rcode{thirdld!~\".*:.*\",instance=~\"$instance\"}[$dsc_statistics_interval]\n    )[$__range:$dsc_statistics_interval]\n  )\n)",
                         "format": "table",
                         "instant": false,
                         "legendFormat": "__auto",
@@ -2112,6 +2062,7 @@
                       "mode": "off"
                     }
                   },
+                  "decimals": 0,
                   "fieldMinMax": false,
                   "thresholds": {
                     "mode": "absolute",
@@ -2202,7 +2153,7 @@
           "description": "",
           "id": 24,
           "links": [],
-          "title": "IP Protocol",
+          "title": "Protocol",
           "vizConfig": {
             "group": "timeseries",
             "kind": "VizConfig",
@@ -2220,8 +2171,8 @@
                     "axisPlacement": "auto",
                     "barAlignment": 0,
                     "barWidthFactor": 1,
-                    "drawStyle": "bars",
-                    "fillOpacity": 70,
+                    "drawStyle": "line",
+                    "fillOpacity": 50,
                     "gradientMode": "none",
                     "hideFrom": {
                       "legend": false,
@@ -2229,23 +2180,25 @@
                       "viz": false
                     },
                     "insertNulls": false,
-                    "lineInterpolation": "stepAfter",
+                    "lineInterpolation": "linear",
                     "lineWidth": 1,
-                    "pointSize": 5,
+                    "pointSize": 1,
                     "scaleDistribution": {
                       "type": "linear"
                     },
-                    "showPoints": "never",
+                    "showPoints": "auto",
                     "showValues": false,
                     "spanNulls": false,
                     "stacking": {
                       "group": "A",
-                      "mode": "normal"
+                      "mode": "percent"
                     },
                     "thresholdsStyle": {
                       "mode": "off"
                     }
                   },
+                  "decimals": 0,
+                  "fieldMinMax": true,
                   "thresholds": {
                     "mode": "absolute",
                     "steps": [
@@ -2282,6 +2235,101 @@
           }
         }
       },
+      "panel-25": {
+        "kind": "Panel",
+        "spec": {
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "hidden": false,
+                    "query": {
+                      "group": "prometheus",
+                      "kind": "DataQuery",
+                      "spec": {
+                        "editorMode": "code",
+                        "exemplar": false,
+                        "expr": "sum by (rcode_name) (\n  sum_over_time(\n    max_over_time(\n      dsc_rcode{instance=~\"$instance\"}[$dsc_statistics_interval]\n    )[$__range:$dsc_statistics_interval]\n  )\n)",
+                        "format": "time_series",
+                        "instant": false,
+                        "legendFormat": "__auto",
+                        "range": true
+                      },
+                      "version": "v0"
+                    },
+                    "refId": "A"
+                  }
+                }
+              ],
+              "queryOptions": {
+                "interval": "1m"
+              },
+              "transformations": []
+            }
+          },
+          "description": "",
+          "id": 25,
+          "links": [],
+          "title": "RCODE",
+          "vizConfig": {
+            "group": "piechart",
+            "kind": "VizConfig",
+            "spec": {
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "palette-classic"
+                  },
+                  "custom": {
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    }
+                  },
+                  "decimals": 0,
+                  "fieldMinMax": false
+                },
+                "overrides": []
+              },
+              "options": {
+                "displayLabels": [
+                  "name",
+                  "percent"
+                ],
+                "legend": {
+                  "displayMode": "table",
+                  "placement": "right",
+                  "showLegend": true,
+                  "sortBy": "Value",
+                  "sortDesc": true,
+                  "values": [
+                    "value"
+                  ]
+                },
+                "pieType": "donut",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "sort": "desc",
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                }
+              }
+            },
+            "version": "12.3.1"
+          }
+        }
+      },
       "panel-3": {
         "kind": "Panel",
         "spec": {
@@ -2299,7 +2347,7 @@
                       "spec": {
                         "editorMode": "code",
                         "exemplar": false,
-                        "expr": "sum by (tld) (\n  sum_over_time(\n    dsc_qtype_vs_tld{instance=~\"$instance\"}[$__range]\n  )\n)",
+                        "expr": "sum by (tld) (\n  sum_over_time(\n    max_over_time(\n      dsc_qtype_vs_tld{instance=~\"$instance\"}[$dsc_statistics_interval]\n    )[$__range:$dsc_statistics_interval]\n  )\n)",
                         "format": "time_series",
                         "instant": false,
                         "legendFormat": "__auto",
@@ -2337,6 +2385,7 @@
                       "viz": false
                     }
                   },
+                  "decimals": 0,
                   "fieldMinMax": false
                 },
                 "overrides": []
@@ -2393,7 +2442,7 @@
                       "spec": {
                         "editorMode": "code",
                         "exemplar": false,
-                        "expr": "topk(\n  100,\n  sum by (secondld) (\n    sum_over_time(\n      dsc_second_ld_vs_rcode{secondld!=\"\", secondld!~\".*:.*\", instance=~\"$instance\"}[$__range]\n    )\n  )\n)",
+                        "expr": "topk(\n  100,\n  sum by (secondld) (\n    sum_over_time(\n      max_over_time(\n        dsc_second_ld_vs_rcode{secondld!=\"\", secondld!~\".*:.*\", instance=~\"$instance\"}[$dsc_statistics_interval]\n      )[$__range:$dsc_statistics_interval]\n    )\n  )\n)",
                         "format": "table",
                         "instant": true,
                         "legendFormat": "__auto",
@@ -2458,6 +2507,7 @@
                       "placement": "auto"
                     }
                   },
+                  "decimals": 0,
                   "thresholds": {
                     "mode": "absolute",
                     "steps": [
@@ -2686,6 +2736,7 @@
                       "mode": "off"
                     }
                   },
+                  "decimals": 1,
                   "thresholds": {
                     "mode": "absolute",
                     "steps": [
@@ -2817,6 +2868,7 @@
                       "mode": "off"
                     }
                   },
+                  "decimals": 1,
                   "thresholds": {
                     "mode": "absolute",
                     "steps": [
@@ -2878,8 +2930,21 @@
                 "name": "panel-3"
               },
               "height": 8,
-              "width": 6,
+              "width": 5,
               "x": 0,
+              "y": 3
+            }
+          },
+          {
+            "kind": "GridLayoutItem",
+            "spec": {
+              "element": {
+                "kind": "ElementReference",
+                "name": "panel-25"
+              },
+              "height": 8,
+              "width": 5,
+              "x": 5,
               "y": 3
             }
           },
@@ -2891,8 +2956,8 @@
                 "name": "panel-4"
               },
               "height": 8,
-              "width": 6,
-              "x": 6,
+              "width": 5,
+              "x": 10,
               "y": 3
             }
           },
@@ -2904,8 +2969,8 @@
                 "name": "panel-11"
               },
               "height": 8,
-              "width": 6,
-              "x": 12,
+              "width": 5,
+              "x": 15,
               "y": 3
             }
           },
@@ -2917,8 +2982,8 @@
                 "name": "panel-15"
               },
               "height": 8,
-              "width": 6,
-              "x": 18,
+              "width": 4,
+              "x": 20,
               "y": 3
             }
           },
@@ -3005,7 +3070,7 @@
             "spec": {
               "element": {
                 "kind": "ElementReference",
-                "name": "panel-24"
+                "name": "panel-10"
               },
               "height": 8,
               "width": 12,
@@ -3018,12 +3083,12 @@
             "spec": {
               "element": {
                 "kind": "ElementReference",
-                "name": "panel-10"
+                "name": "panel-24"
               },
-              "height": 9,
-              "width": 24,
-              "x": 0,
-              "y": 47
+              "height": 8,
+              "width": 12,
+              "x": 12,
+              "y": 39
             }
           }
         ]
@@ -3186,6 +3251,19 @@
           "regex": "",
           "skipUrlSync": false,
           "sort": "disabled"
+        }
+      },
+      {
+        "kind": "ConstantVariable",
+        "spec": {
+          "current": {
+            "text": "1m",
+            "value": "1m"
+          },
+          "hide": "hideVariable",
+          "name": "dsc_statistics_interval",
+          "query": "1m",
+          "skipUrlSync": true
         }
       }
     ]

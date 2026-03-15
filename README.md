@@ -41,3 +41,7 @@ docker compose up -d --pull always --force-recreate
 - <https://codeberg.org/DNS-OARC/dsc/src/branch/main>
 - <https://codeberg.org/DNS-OARC/dsc-datatool>
 - <https://dev.dns-oarc.net/packages/>
+
+## Grafana Sample Dashboard
+
+![Grafana Sample Dashboard](./docs/img/dashboard.jpg)
